@@ -44,9 +44,9 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(PublisherNotFountException.class)
+    @ExceptionHandler(PublisherNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleBookNotFound(PublisherNotFountException ex) {
+    public ErrorResponse handleBookNotFound(PublisherNotFoundException ex) {
 
         return ErrorResponse.builder()
                 .message(ex.getMessage())

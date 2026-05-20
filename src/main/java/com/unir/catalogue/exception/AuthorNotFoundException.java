@@ -5,4 +5,10 @@ public class AuthorNotFoundException extends RuntimeException{
     public AuthorNotFoundException(int id) {
         super("Autor no encontrado con id: " + id);
     }
+
+    public AuthorNotFoundException() {
+
+        super("Autor no encontrado");
+    }
+
 }
