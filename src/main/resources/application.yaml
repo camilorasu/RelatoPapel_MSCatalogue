@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: catalogue
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/catalogue
+    username: root
+    password: unir1234
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.data.jpa: DEBUG
+
+server:
+  port: 8085
