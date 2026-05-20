@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -52,7 +53,7 @@ public class BookRequestDto implements Serializable {
 
     @NotNull(message = "Price requerido")
     @JsonProperty("price")
-    private Double price;
+    private BigDecimal price;
 
     @NotNull(message = "Stock requerido")
     @JsonProperty("stock")
