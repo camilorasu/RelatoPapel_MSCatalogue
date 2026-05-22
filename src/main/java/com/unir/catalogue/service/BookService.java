@@ -1,12 +1,7 @@
 package com.unir.catalogue.service;
 
-import com.unir.catalogue.controller.model.BookRequestDto;
-import com.unir.catalogue.controller.model.BookResponseDto;
-import com.unir.catalogue.controller.model.BooksResponseDto;
-import com.unir.catalogue.exception.AuthorNotFoundException;
-import com.unir.catalogue.exception.BookNotFoundException;
-import com.unir.catalogue.exception.CategoryNotFoundException;
-import com.unir.catalogue.exception.PublisherNotFoundException;
+import com.unir.catalogue.controller.model.*;
+import com.unir.catalogue.exception.*;
 import com.unir.catalogue.mapper.BookMapper;
 import com.unir.catalogue.repository.*;
 import com.unir.catalogue.repository.model.*;
@@ -163,5 +158,32 @@ public class BookService {
         book.setIsActive(false);
 
         bookJpaRepository.save(book);
+    }
+
+    @Transactional
+    public void increaseStock(BooksQuantityRequestDto dto){
+
+        for(BookQuantityRequestDto item : dto.getBooks()){
+
+            Book book = bookJpaRepository.findById(item.getId())
+                    .orElseThrow(()-> new BookNotFoundException(item.getId()));
+
+
+            book.increaseStock(item.getQuantity());
+            bookJpaRepository.save(book);
+        }
+    }
+
+    @Transactional
+    public void decreaseStock(BooksQuantityRequestDto dto){
+
+        for(BookQuantityRequestDto item : dto.getBooks()){
+
+            Book book = bookJpaRepository.findById(item.getId())
+                    .orElseThrow(()-> new BookNotFoundException(item.getId()));
+
+            book.decreaseStock(item.getQuantity());
+            bookJpaRepository.save(book);
+        }
     }
 }

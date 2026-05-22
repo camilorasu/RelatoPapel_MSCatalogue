@@ -15,27 +15,27 @@ import java.util.Optional;
 public interface BookJpaRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
 
     @Query("SELECT DISTINCT b FROM Book b " +
-            "LEFT JOIN FETCH b.publisher " +
-            "LEFT JOIN FETCH b.authors " +
-            "LEFT JOIN FETCH b.categories " +
-            "LEFT JOIN FETCH b.images " +
+            "LEFT JOIN  b.publisher " +
+            "LEFT JOIN  b.authors " +
+            "LEFT JOIN  b.categories " +
+            "LEFT JOIN  b.images " +
             "WHERE b.isActive = true")
     List<Book> findAllActiveWithDetails();
 
 
     @Query("SELECT b FROM Book b " +
-           "LEFT JOIN FETCH b.publisher " +
-            "LEFT JOIN FETCH b.authors " +
-            "LEFT JOIN FETCH b.categories " +
-            "LEFT JOIN FETCH b.images " +
-            "WHERE b.id = :id and b.isActived = true ")
+           "LEFT JOIN  b.publisher " +
+            "LEFT JOIN  b.authors " +
+            "LEFT JOIN  b.categories " +
+            "LEFT JOIN  b.images " +
+            "WHERE b.id = :id and b.isActive = true ")
     Optional<Book> findByIdWithDetails(@Param("id") Integer id);
 
     @Query("SELECT DISTINCT b FROM Book b " +
-            "LEFT JOIN FETCH b.publisher " +
-            "LEFT JOIN FETCH b.authors " +
-            "LEFT JOIN FETCH b.categories " +
-            "LEFT JOIN FETCH b.images " +
+            "LEFT JOIN  b.publisher " +
+            "LEFT JOIN  b.authors " +
+            "LEFT JOIN  b.categories " +
+            "LEFT JOIN  b.images " +
             "WHERE b.id = :id")
     Optional<Book> findByIdIncludingInactive(@Param("id") Integer id    );
 }

@@ -54,4 +54,14 @@ public class GlobalExceptionHandler {
                 .date(LocalDateTime.now())
                 .build();
     }
+
+    @ExceptionHandler(BookInsufficientStockException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBookStockException(BookInsufficientStockException ex){
+        return  ErrorResponse.builder()
+                .message(ex.getMessage())
+                .status(HttpStatus.CONFLICT.value())
+                .date(LocalDateTime.now())
+                .build();
+    }
 }

@@ -1,5 +1,6 @@
 package com.unir.catalogue.repository.model;
 
+import com.unir.catalogue.exception.BookInsufficientStockException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -85,4 +86,24 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "id_author")
     )
     private List <Author> authors;
+
+    public void decreaseStock(int quantity){
+        if(quantity<0){
+            throw new IllegalArgumentException("La cantidad debe ser positiva");
+        }
+        if (stock < quantity) {
+            throw new BookInsufficientStockException(this.id);
+        }
+
+        this.stock -= quantity;
+    }
+
+    public void increaseStock(int quantity) {
+
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser positiva");
+        }
+
+        this.stock += quantity;
+    }
 }

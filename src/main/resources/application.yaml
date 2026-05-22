@@ -3,7 +3,7 @@ spring:
     name: catalogue
 
   datasource:
-    url: jdbc:mysql://localhost:3306/catalogue
+    url: jdbc:mysql://localhost:3306/book_catalogue
     username: root
     password: unir1234
 
