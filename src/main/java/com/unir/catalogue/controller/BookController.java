@@ -28,16 +28,16 @@ public class BookController {
 
     @PostMapping("books")
     public ResponseEntity<BookResponseDto>  createBook(@RequestBody BookRequestDto request){
-        return ResponseEntity.ok(
-                bookService.createBook(request)
-        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                bookService.createBook(request));
+
     }
 
     @PutMapping("books/{id}")
     public ResponseEntity<BookResponseDto> updateBook(@PathVariable Integer id,
                                                       @RequestBody BookRequestDto requestDto){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(bookService.updateBook(id, requestDto));
+        return ResponseEntity.ok(
+                bookService.updateBook(id, requestDto));
     }
 
     @DeleteMapping("books/{id}")
@@ -86,9 +86,12 @@ public class BookController {
             @RequestParam(required = false) BigDecimal price,
             @RequestParam(required = false) Integer stock,
             @RequestParam(required = false , defaultValue = "0") Integer numberPage,
-            @RequestParam(required = false, defaultValue = "10") Integer sizePage){
+            @RequestParam(required = false, defaultValue = "10") Integer sizePage,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String publisher){
         return ResponseEntity.ok(
-                bookService.SearchBooks(title,description,pages,isbn,price,stock,sizePage,numberPage)
+                bookService.SearchBooks(title,description,pages,isbn,price,stock,sizePage,numberPage,category, author, publisher)
         );
     }
 

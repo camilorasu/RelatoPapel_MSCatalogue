@@ -18,9 +18,9 @@ import java.util.List;
 public class BookRepository {
     private final BookJpaRepository bookJpaRepository;
 
-    public List<Book> getBooks (String title, String description, Integer pages, String isbn, BigDecimal price, Integer stock){
+    public List<Book> getBooks (String title, String description, Integer pages, String isbn, BigDecimal price, Integer stock, String category, String author, String publisher){
 
-        SearchCriteria<Book> spec = buildCriteria(title, description, pages, isbn, price, stock);
+        SearchCriteria<Book> spec = buildCriteria(title, description, pages, isbn, price, stock, category, author, publisher);
 
         return  bookJpaRepository.findAll(spec);
     }
@@ -36,16 +36,16 @@ public class BookRepository {
         return  bookJpaRepository.findAll(Pageable.ofSize(size).withPage(page)).getContent();
     }
 
-    public List<Book> getBooks (String title, String description, Integer pages, String isbn, BigDecimal price, Integer stock, Integer pageSize, Integer numberPage) {
+    public List<Book> getBooks (String title, String description, Integer pages, String isbn, BigDecimal price, Integer stock, Integer pageSize, Integer numberPage, String category, String author, String publisher) {
 
-        SearchCriteria<Book> spec = buildCriteria(title, description, pages, isbn, price, stock);
+        SearchCriteria<Book> spec = buildCriteria(title, description, pages, isbn, price, stock, category, author, publisher);
 
         return  bookJpaRepository.findAll(spec, Pageable.ofSize(pageSize).withPage(numberPage)).getContent();
     }
 
     private SearchCriteria<Book> buildCriteria(String title, String description,
                                                Integer pages, String isbn,
-                                               BigDecimal price, Integer stock) {
+                                               BigDecimal price, Integer stock, String category, String author, String publisher) {
 
         SearchCriteria<Book> spec = new SearchCriteria<>();
 
@@ -73,6 +73,17 @@ public class BookRepository {
             spec.add(new SearchStatement(SearchFields.STOCK, stock, SearchOperation.GREATER_THAN_EQUAL));
         }
 
+        if(StringUtils.hasText(category)){
+            spec.add(new SearchStatement(SearchFields.CATEGORIES, category, SearchOperation.MATCH));
+        }
+
+        if(StringUtils.hasText(author)){
+            spec.add(new SearchStatement(SearchFields.AUTHORS, author, SearchOperation.MATCH));
+        }
+
+        if(StringUtils.hasText(publisher)){
+            spec.add(new SearchStatement(SearchFields.PUBLISHER, publisher, SearchOperation.MATCH));
+        }
         return spec;
     }
 }

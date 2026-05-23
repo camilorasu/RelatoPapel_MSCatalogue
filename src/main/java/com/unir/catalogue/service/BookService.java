@@ -39,9 +39,12 @@ public class BookService {
                                               Integer pages,
                                               String isbn,
                                               BigDecimal price,
-                                              Integer stock){
+                                              Integer stock,
+                                              String category,
+                                              String author,
+                                              String publisher){
 
-        List<Book> books = bookRepository.getBooks(title,description,pages,isbn,price,stock);
+        List<Book> books = bookRepository.getBooks(title,description,pages,isbn,price,stock, category, author, publisher);
 
         return BookMapper.toResponseList(books);
     }
@@ -54,10 +57,13 @@ public class BookService {
                                               BigDecimal price,
                                               Integer stock,
                                               Integer pageSize,
-                                              Integer pageNumber
+                                              Integer pageNumber,
+                                              String category,
+                                              String author,
+                                              String publisher
                                               ){
 
-        List<Book> books = bookRepository.getBooks(title,description,pages,isbn,price,stock,pageSize,pageNumber);
+        List<Book> books = bookRepository.getBooks(title,description,pages,isbn,price,stock,pageSize,pageNumber, category,author,publisher);
 
         return BookMapper.toResponseList(books);
     }

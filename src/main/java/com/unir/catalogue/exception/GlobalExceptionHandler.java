@@ -1,6 +1,6 @@
 package com.unir.catalogue.exception;
 
-import com.unir.supplies.orders.controller.model.ErrorResponse;
+import com.unir.catalogue.controller.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

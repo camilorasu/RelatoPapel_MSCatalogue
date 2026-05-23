@@ -20,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AuthorResponseDto implements Serializable {
 
-    @JsonProperty("id_Aut")
+    @JsonProperty("id")
     private Integer id;
 
     @JsonProperty("name")
