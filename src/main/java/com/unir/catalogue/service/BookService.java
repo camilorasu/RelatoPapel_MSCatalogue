@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -128,16 +129,21 @@ public class BookService {
                 .orElseThrow(() ->
                         new PublisherNotFoundException(dto.getIdPublisher()));
 
-        List<Author> authors = authorJpaRepository.findAllById(dto.getIdAuthors());
+        List<Author> authors = new ArrayList<>(
+                authorJpaRepository.findAllById(dto.getIdAuthors())
+        );
 
-        List<Category> categories = categoryJpaRepository.findAllById(dto.getIdCategories());
+        List<Category> categories = new ArrayList<>(
+                categoryJpaRepository.findAllById(dto.getIdCategories())
+        );
 
-        List<Image> images = dto.getUrlImages().stream()
-                .map(url -> Image.builder()
-                        .urlImage(url)
-                        .book(book)
-                        .build())
-                .toList();
+        List<Image> images = new ArrayList<>(
+                dto.getUrlImages().stream()
+                        .map(url -> Image.builder()
+                                .urlImage(url)
+                                .book(book)
+                                .build()).toList()
+        );
 
         book.setTitle(dto.getTitle());
         book.setDescription(dto.getDescription());
