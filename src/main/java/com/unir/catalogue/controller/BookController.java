@@ -1,5 +1,6 @@
 package com.unir.catalogue.controller;
 
+import com.unir.catalogue.controller.model.BookPatchDto;
 import com.unir.catalogue.controller.model.BookRequestDto;
 import com.unir.catalogue.controller.model.BookResponseDto;
 import com.unir.catalogue.controller.model.BooksQuantityRequestDto;
@@ -36,6 +37,13 @@ public class BookController {
     @PutMapping("books/{id}")
     public ResponseEntity<BookResponseDto> updateBook(@PathVariable Integer id,
                                                       @RequestBody BookRequestDto requestDto){
+        return ResponseEntity.ok(
+                bookService.updateBook(id, requestDto));
+    }
+
+    @PatchMapping("books/{id}")
+    public ResponseEntity<BookResponseDto> updateBook(@PathVariable Integer id,
+                                                      @RequestBody BookPatchDto requestDto){
         return ResponseEntity.ok(
                 bookService.updateBook(id, requestDto));
     }

@@ -1,5 +1,6 @@
 package com.unir.catalogue.service;
 
+
 import com.unir.catalogue.controller.model.*;
 import com.unir.catalogue.exception.*;
 import com.unir.catalogue.mapper.BookMapper;
@@ -159,6 +160,78 @@ public class BookService {
         Book updatedBook = bookJpaRepository.save(book);
 
         return BookMapper.toResponse(updatedBook);
+    }
+
+    @Transactional
+    public BookResponseDto updateBook(Integer id, BookPatchDto dto)
+    {
+       Book book = bookJpaRepository.findById(id)
+               .orElseThrow(()-> new BookNotFoundException(id));
+       if(dto.getTitle() != null){
+           book.setTitle(dto.getTitle());
+       }
+       if(dto.getDescription()!=null){
+           book.setDescription(dto.getDescription());
+       }
+       if(dto.getPages()!=null){
+           book.setPages(dto.getPages());
+       }
+       if(dto.getIsbn()!=null){
+           book.setIsbn(dto.getIsbn());
+       }
+       if(dto.getPrice()!=null){
+           book.setPrice(dto.getPrice());
+       }
+       if(dto.getStock()!=null){
+           book.setStock(dto.getStock());
+       }
+
+       if(dto.getIdPublisher()!=null){
+           Publisher publisher = publisherJpaRepository
+                   .findById(dto.getIdPublisher())
+                   .orElseThrow(()->new PublisherNotFoundException(
+                           dto.getIdPublisher()
+                   ));
+           book.setPublisher(publisher);
+       }
+
+        if (dto.getIdAuthors() != null) {
+            List<Author> authors =
+                    authorJpaRepository.findAllById(
+                            dto.getIdAuthors()
+                    );
+            if (authors.size() != dto.getIdAuthors().size()) {
+                throw new AuthorNotFoundException();
+            }
+            book.setAuthors(authors);
+        }
+
+        if(dto.getIdCategories()!=null){
+            List<Category> categories =
+                    categoryJpaRepository.findAllById(
+                            dto.getIdCategories()
+                    );
+            if(categories.size() != dto.getIdCategories().size()) {
+                throw  new CategoryNotFoundException();
+            }
+            book.setCategories(categories);
+        }
+
+        if(dto.getUrlImages()!=null){
+            List<Image> images = dto.getUrlImages()
+                    .stream().map(
+                            url-> Image.builder()
+                                    .urlImage(url)
+                                    .book(book)
+                                    .build()
+                    ).toList();
+
+            book.setImages(images);
+        }
+
+        Book updateBook = bookJpaRepository.save(book);
+
+        return BookMapper.toResponse(updateBook);
     }
 
     @Transactional
