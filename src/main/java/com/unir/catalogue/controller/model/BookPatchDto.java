@@ -2,6 +2,7 @@ package com.unir.catalogue.controller.model;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookPatchDto {
+public class BookPatchDto implements Serializable {
     private String title;
 
     private String description;
